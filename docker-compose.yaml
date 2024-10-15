@@ -1,0 +1,35 @@
+# Wersja pliku composer
+version: "3.7"
+# "Services" to lista kontenerów, które powstaną po uruchomieniu docker compose
+services:
+    www:
+        #'build': Poniższy zapis oznacza odniesienie się do pliku Dockerfile znajdującego się w niżej opisanej lokalizacji(./docker/www), na podstawie, którego zostanie utworzony ten kontener.
+        build:
+            context: docker/www
+        #'volumes': Poniższy zapis oznacza zamontowanie w kontenerze wszystkich plików znajdujących się w tej samej lokalizacji co ten plik. Wartość przed ':' oznacza lokalizację na komputerze lokalny, natomiast wartość za ':' oznacza lokalizacje w tworzonym kontenerze dockera.
+        volumes:
+            - ./:/www
+        #'ports': Konfiguracja ta oznacza to, ze na komputerze lokalnym po wpisaniu localhost:80, będziemy widzieć zawartość, która zajmuje port 80 w dockerze.
+        ports:
+            - "80:80"
+
+    database:
+        #'image': Poniższy zapis oznacza odniesienie się do obrazu bazy danych na podstawie którego zostanie utworzony kontener.
+        image: mariadb:10.10
+        #'ports': Konfiguracja ta oznacza to, ze na komputerze lokalnym w bazie danych na komputerze będzie dostepna pod portem 3306. Również zajmuje port 3306 w dockerze.
+        ports:
+            - 3306:3306
+        #'environment': Konfiguracja budowanej bazy danych.
+        environment:
+            - MARIADB_DATABASE=crud
+            - MARIADB_USER=crud
+            - MARIADB_PASSWORD=1234
+            - MARIADB_ROOT_PASSWORD=1234
+        #'volumes': Ten zapis oznacza to, że baza danych zostaje umieszona w kontenrze pod lokalizacją opisaną po ':', w tym przypadku '/var/lib/mysql', wartość przed ':' jest odniesieniem do volumenu 'winter-db' opisanego poniżej.
+        volumes:
+            - winter-db:/var/lib/mysql
+volumes:
+    winter-db:
+        driver: local
+
+# Aby aplikacja była dostepna pod adresem 'localhost:3000', ustawienia w pliku webpack.mix.js, muszą wyglądać następująco: mix.browserSync - proxy: "http://www:80",

@@ -1,5 +1,5 @@
-Instrukcja uruchomienia aplikacji CRUD na docker:
-1. W konsolli musimy przejść do folderu, w którym znajduje się projekt CRUD,a. następnie wkleić docker compose build, a następnie kliknąć enter.
+Instrukcja uruchomienia aplikacji wypożyczalni książek na docker:
+1. W konsolli musimy przejść do folderu, w którym znajduje się projekt, a następnie wkleić docker compose build, a następnie kliknąć enter.
 2. Nastepnie w konsoli należy wkleić docker compose up -d , a następnie kliknąć enter.
 3. Nazwe pliku .env.example zmienić na .env
 4. W konsoli wkleić: docker compose run --rm www composer install.
@@ -11,31 +11,31 @@ W konsoli wkleić: docker compose run --rm www php artisan test
 UWAGA! Z uwagi na czas przygotowania aplikacji testy dostosowane są do ilości danych, które dostarczone zostaną do aplikacji poprzez seedery.
 Dlatego też istotne jest, by przed uruchomieniem testów aplikacji wykonać punkty 6 oraz 7.
 8. Poniżej opis Endpoint'ów aplikacji: 
-GET /api/books
+    GET /api/books
     Opis: Listowanie książek z paginacją i możliwością wyszukiwania.
     Parametry: search (opcjonalny)
 
-GET /api/books/{id}
+    GET /api/books/{id}
     Opis: Szczegóły książki.
     
-POST /api/books/{id}/rent
+    POST /api/books/{id}/rent
     Opis: Wypożyczenie książkę.
     Parametry: client_id (ID klienta)
 
-PUT /api/books/{id}/return
+    PUT /api/books/{id}/return
     Opis: Oddanie książki.
 
-GET /api/clients
+    GET /api/clients
     Opis: Listowanie klientów.
 
-GET /api/clients/{id}
+    GET /api/clients/{id}
     Opis: Szczegóły klienta.
 
-POST /api/clients
+    POST /api/clients
     Opis: Dodanie klienta.
     Parametry: first_name, last_name
 
-DELETE /api/clients/{id}
+    DELETE /api/clients/{id}
     Opis: Usunięcie klienta.
 
 9. UWAGA: Jeśli wystąpi błąd: 
